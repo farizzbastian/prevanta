@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">Avatar Bidan Dewi Anggraini</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="96" y2="96">
+      <stop stop-color="#f9d9df"/>
+      <stop offset="1" stop-color="#f2b5c2"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="48" fill="url(#bg)"/>
+  <circle cx="48" cy="39" r="17" fill="#f4c7a7"/>
+  <path d="M29 39c0-18 9-27 20-27 13 0 23 10 23 28-5-2-9-7-11-13-8 8-18 11-32 12Z" fill="#5b3d37"/>
+  <path d="M18 96c2-24 14-35 30-35s28 11 30 35" fill="#ad3150"/>
+  <path d="M41 46c2 3 5 4 8 4 4 0 7-1 9-4" fill="none" stroke="#a96055" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="41" cy="38" r="1.5" fill="#4d3835"/>
+  <circle cx="56" cy="38" r="1.5" fill="#4d3835"/>
+</svg>

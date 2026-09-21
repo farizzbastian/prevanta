@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Logo Prevanta</title>
+  <defs>
+    <linearGradient id="petal" x1="10" y1="8" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f3aebd"/>
+      <stop offset="1" stop-color="#ad3150"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="#fff7f8"/>
+  <path d="M32 47c-2.6-7.9-13-11.2-13-20.2A9.8 9.8 0 0 1 36 20a9.8 9.8 0 0 1 17 6.8C53 35.8 40.6 40.7 32 47Z" fill="url(#petal)" opacity=".96"/>
+  <path d="M32 47c-8.6-6.3-21-11.2-21-20.2A9.8 9.8 0 0 1 28 20c1.9 2.2 3.2 4.7 4 7.5" fill="none" stroke="#cf4869" stroke-width="3.6" stroke-linecap="round"/>
+  <path d="M32 15v34" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+  <circle cx="32" cy="51" r="3" fill="#27ae7b"/>
+</svg>

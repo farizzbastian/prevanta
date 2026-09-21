@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', 'Segoe UI', sans-serif;
+
+    --color-prevanta-50: #fff7f8;
+    --color-prevanta-100: #fdecef;
+    --color-prevanta-200: #fad8df;
+    --color-prevanta-300: #f3aebd;
+    --color-prevanta-400: #e77891;
+    --color-prevanta-500: #cf4869;
+    --color-prevanta-600: #ad3150;
+    --color-prevanta-700: #8b2942;
+    --color-prevanta-800: #6f2639;
+    --color-prevanta-900: #5e2334;
+
+    --color-mint-50: #effcf7;
+    --color-mint-100: #d8f7eb;
+    --color-mint-500: #27ae7b;
+    --color-mint-600: #178760;
+
+    --color-ink-500: #74686d;
+    --color-ink-700: #493e43;
+    --color-ink-900: #271f22;
+
+    --shadow-card: 0 8px 28px rgba(104, 55, 70, 0.07);
+}
+
+@layer base {
+    html {
+        background: #fbf8f9;
+    }
+
+    body {
+        min-width: 320px;
+        color: var(--color-ink-900);
+        background:
+            radial-gradient(circle at 85% 10%, rgba(252, 231, 236, 0.55), transparent 28rem),
+            #fbf8f9;
+    }
+
+    button,
+    a {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+
+    .scrollbar-thin {
+        scrollbar-color: #e7d7dc transparent;
+        scrollbar-width: thin;
+    }
+}

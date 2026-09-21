@@ -1,0 +1,11 @@
+@extends('layouts.app')
+
+@section('title', 'Dashboard Bidan — Prevanta')
+
+@section('content')
+<x-portal-shell role="bidan" active="dashboard">
+    <section class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-prevanta-900 to-prevanta-500 p-7 text-white"><p class="text-sm font-semibold text-prevanta-100">Puskesmas Sukamaju · Wilayah RW 01–06</p><h1 class="mt-2 text-3xl font-bold">Selamat Datang, Bdn. Dewi Anggraini!</h1><p class="mt-3 max-w-2xl text-sm leading-6 text-prevanta-100">Tinjau data pertumbuhan, verifikasi hasil pengukuran, dan pantau prevalensi stunting wilayah kerja Anda.</p><span class="absolute -bottom-20 -right-8 size-64 rounded-full bg-white/10"></span></section>
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"><x-metric-tile label="Total Balita" value="284" note="6 Posyandu binaan" icon="users" /><x-metric-tile label="Pengukuran Bulan Ini" value="228" note="80% cakupan" icon="clipboard" tone="mint" /><x-metric-tile label="Menunggu Verifikasi" value="4" note="Perlu ditinjau" icon="history" tone="sand" /><x-metric-tile label="Gizi Normal" value="231" note="81,3% balita" icon="chart" tone="mint" /><x-metric-tile label="Perlu Dipantau" value="37" note="13% balita" icon="bell" tone="sand" /><x-metric-tile label="Risiko Stunting" value="16" note="5,7% balita" icon="clipboard" tone="rose" /></div>
+    <div class="grid gap-5 xl:grid-cols-[1.55fr_1fr]"><x-growth-chart title="Prevalensi Stunting Bulanan" subtitle="Perbandingan enam bulan terakhir" /><x-card><div class="flex items-center justify-between"><h2 class="font-bold">Statistik Kelompok Usia</h2><a href="{{ route('bidan.history') }}" class="text-xs font-bold text-prevanta-600">Riwayat</a></div><div class="mt-5 divide-y divide-prevanta-50">@foreach ([['0–6 bulan',48,'2 risiko'],['7–12 bulan',55,'3 risiko'],['1–2 tahun',76,'5 risiko'],['2–5 tahun',105,'6 risiko']] as [$age,$count,$risk])<div class="flex items-center justify-between py-4 first:pt-0"><div><p class="text-sm font-semibold">{{ $age }}</p><p class="mt-1 text-xs text-ink-500">{{ $count }} balita</p></div><x-status-pill tone="rose">{{ $risk }}</x-status-pill></div>@endforeach</div></x-card></div>
+</x-portal-shell>
+@endsection
