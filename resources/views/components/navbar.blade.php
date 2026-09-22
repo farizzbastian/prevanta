@@ -6,6 +6,7 @@
         'kader' => ['name' => 'Kader Siti Rahayu', 'label' => 'Kader'],
         default => ['name' => 'Bdn. Dewi Anggraini', 'label' => 'Bidan'],
     };
+    $identity['name'] = auth()->user()?->name ?? $identity['name'];
 @endphp
 
 <header class="sticky top-0 z-30 border-b border-prevanta-100 bg-white/95 backdrop-blur lg:ml-[268px]">

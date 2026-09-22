@@ -44,6 +44,7 @@
     ];
 
     $profile = $profiles[$role] ?? $profiles['bidan'];
+    $profile['name'] = auth()->user()?->name ?? $profile['name'];
     $roleMenus = $menus[$role] ?? $menus['bidan'];
     $homeRoute = match ($role) {
         'orang-tua' => 'parent.children',
@@ -125,5 +126,9 @@
             <span class="font-semibold text-ink-700">{{ $role === 'orang-tua' ? 'Posyandu terhubung:' : 'Posko aktif:' }}</span><br>
             Posyandu Mawar Melati · RW 03
         </div>
+        <form method="POST" action="{{ route('logout') }}" class="mt-2">
+            @csrf
+            <button type="submit" class="w-full rounded-xl px-3 py-2 text-left text-xs font-bold text-prevanta-700 transition hover:bg-prevanta-50">Keluar dari akun</button>
+        </form>
     </div>
 </aside>

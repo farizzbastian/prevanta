@@ -3,42 +3,59 @@
 @section('title', 'Daftar — Prevanta')
 
 @section('content')
-<main class="grid min-h-screen bg-white lg:grid-cols-[46%_54%]">
-    <section class="relative hidden items-end justify-center overflow-hidden bg-[#fff9fa] p-12 lg:flex">
-        <a href="{{ route('landing') }}" class="absolute left-10 top-9 flex items-center gap-3">
-            <img src="{{ asset('assets/logo/prevanta-mark.svg') }}" alt="" class="size-11">
-            <span class="text-2xl font-bold text-prevanta-700">Prevanta</span>
-        </a>
-        <img src="{{ asset('assets/images/family-illustration.svg') }}" alt="Ilustrasi keluarga sehat" class="max-h-[78vh] w-full max-w-xl object-contain">
-    </section>
+<x-auth-shell
+    eyebrow="Bergabung dengan Prevanta"
+    heading="Buat Akun Orang Tua"
+    description="Isi data berikut untuk mulai memantau tumbuh kembang buah hati."
+    content-width="max-w-lg"
+>
+    <form method="POST" action="{{ route('register.store') }}" class="mt-8 grid gap-4 sm:grid-cols-2">
+        @csrf
+        <x-auth-field wrapper-class="sm:col-span-2" label="Nama Lengkap" name="name" placeholder="Nama orang tua" autocomplete="name" />
+        <x-auth-field label="Email" name="email" type="email" placeholder="nama@email.com" autocomplete="email" />
+        <x-auth-field label="Nomor WhatsApp" name="no_hp" type="tel" placeholder="08xxxxxxxxxx" autocomplete="tel" />
+        <x-auth-field wrapper-class="sm:col-span-2" label="NIK" name="nik" placeholder="16 digit NIK" />
 
-    <section class="flex items-center justify-center bg-gradient-to-br from-prevanta-800 via-prevanta-600 to-prevanta-300 px-5 py-10 sm:px-10">
-        <div class="w-full max-w-xl text-white">
-            <p class="text-sm font-semibold text-prevanta-100">Bergabung dengan Prevanta</p>
-            <h1 class="mt-2 text-4xl font-bold tracking-tight">Buat Akun Orang Tua</h1>
-            <p class="mt-3 text-sm text-prevanta-100">Isi data berikut untuk mulai memantau tumbuh kembang buah hati.</p>
-            <form class="mt-7 grid gap-4 sm:grid-cols-2" data-demo-form>
-                <label class="grid gap-2 text-sm font-semibold sm:col-span-2">Nama Lengkap
-                    <input type="text" placeholder="Nama orang tua" required class="rounded-xl bg-white px-4 py-3 text-ink-900 outline-none focus:ring-4 focus:ring-white/20">
-                </label>
-                <label class="grid gap-2 text-sm font-semibold">Email
-                    <input type="email" placeholder="nama@email.com" required class="rounded-xl bg-white px-4 py-3 text-ink-900 outline-none focus:ring-4 focus:ring-white/20">
-                </label>
-                <label class="grid gap-2 text-sm font-semibold">Nomor WhatsApp
-                    <input type="tel" placeholder="08xxxxxxxxxx" required class="rounded-xl bg-white px-4 py-3 text-ink-900 outline-none focus:ring-4 focus:ring-white/20">
-                </label>
-                <label class="grid gap-2 text-sm font-semibold">Kata Sandi
-                    <input type="password" placeholder="Minimal 8 karakter" required class="rounded-xl bg-white px-4 py-3 text-ink-900 outline-none focus:ring-4 focus:ring-white/20">
-                </label>
-                <label class="grid gap-2 text-sm font-semibold">Konfirmasi Kata Sandi
-                    <input type="password" placeholder="Ulangi kata sandi" required class="rounded-xl bg-white px-4 py-3 text-ink-900 outline-none focus:ring-4 focus:ring-white/20">
-                </label>
-                <label class="flex items-start gap-3 text-xs leading-5 text-prevanta-50 sm:col-span-2"><input type="checkbox" required class="mt-1 accent-prevanta-800">Saya menyetujui syarat penggunaan dan kebijakan privasi Prevanta.</label>
-                <button class="rounded-xl bg-white px-5 py-3.5 font-bold text-prevanta-700 shadow-lg sm:col-span-2">Daftar Sekarang</button>
-                <p class="hidden rounded-xl bg-white/15 p-3 text-center text-sm sm:col-span-2" data-form-message>Mode frontend: data tidak dikirim ke server.</p>
-            </form>
-            <p class="mt-6 text-center text-sm text-prevanta-100">Sudah punya akun? <a href="{{ route('login') }}" class="font-bold text-white underline underline-offset-4">Masuk</a></p>
-        </div>
-    </section>
-</main>
+        <label class="grid gap-2 text-sm font-semibold text-white">Jenis Kelamin
+            <select name="jenis_kelamin" required class="rounded-xl border border-white/20 bg-white px-4 py-3.5 font-normal text-ink-900 outline-none focus:ring-4 focus:ring-white/20">
+                <option value="">Pilih jenis kelamin</option>
+                @foreach ($genders as $gender)
+                    <option value="{{ $gender->value }}" @selected(old('jenis_kelamin') === $gender->value)>{{ $gender->label() }}</option>
+                @endforeach
+            </select>
+            @error('jenis_kelamin')<span class="text-xs text-[#ffe1e7]">{{ $message }}</span>@enderror
+        </label>
+
+        <label class="grid gap-2 text-sm font-semibold text-white">Hubungan dengan Balita
+            <select name="hubungan_dengan_balita" required class="rounded-xl border border-white/20 bg-white px-4 py-3.5 font-normal text-ink-900 outline-none focus:ring-4 focus:ring-white/20">
+                <option value="">Pilih hubungan</option>
+                @foreach (['ibu' => 'Ibu', 'ayah' => 'Ayah', 'wali' => 'Wali'] as $value => $label)
+                    <option value="{{ $value }}" @selected(old('hubungan_dengan_balita') === $value)>{{ $label }}</option>
+                @endforeach
+            </select>
+            @error('hubungan_dengan_balita')<span class="text-xs text-[#ffe1e7]">{{ $message }}</span>@enderror
+        </label>
+
+        <x-auth-field label="Kata Sandi" name="password" type="password" placeholder="Minimal 8 karakter" autocomplete="new-password" />
+        <x-auth-field label="Konfirmasi Kata Sandi" name="password_confirmation" type="password" placeholder="Ulangi kata sandi" autocomplete="new-password" />
+
+        <label class="flex items-start gap-3 text-xs leading-5 text-prevanta-50 sm:col-span-2">
+            <input type="checkbox" name="terms" value="1" required class="mt-1 accent-prevanta-800" @checked(old('terms'))>
+            <span>Saya menyetujui syarat penggunaan dan kebijakan privasi Prevanta.</span>
+        </label>
+
+        <button type="submit" class="rounded-xl bg-white px-5 py-3.5 font-bold text-prevanta-700 shadow-lg transition hover:bg-prevanta-50 sm:col-span-2">Daftar Sekarang</button>
+    </form>
+
+    <div class="my-6 flex items-center gap-3 text-xs text-white/70">
+        <span class="h-px flex-1 bg-white/25"></span>
+        <span>Atau</span>
+        <span class="h-px flex-1 bg-white/25"></span>
+    </div>
+
+    <p class="text-center text-sm text-prevanta-100">
+        Sudah punya akun?
+        <a href="{{ route('login') }}" class="font-bold text-white underline underline-offset-4">Masuk</a>
+    </p>
+</x-auth-shell>
 @endsection

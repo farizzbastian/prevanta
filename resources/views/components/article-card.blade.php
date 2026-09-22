@@ -3,6 +3,7 @@
     'category' => 'Tumbuh Kembang',
     'excerpt',
     'tone' => 'rose',
+    'image' => null,
 ])
 
 @php
@@ -14,9 +15,13 @@
 @endphp
 
 <article class="overflow-hidden rounded-2xl border border-prevanta-100 bg-white shadow-card transition hover:-translate-y-0.5">
-    <div class="grid h-40 place-items-center bg-gradient-to-br {{ $tones[$tone] }}">
-        <x-icon name="book" class="size-12 opacity-70" />
-    </div>
+    @if ($image)
+        <img src="{{ Storage::url($image) }}" alt="" class="h-40 w-full object-cover">
+    @else
+        <div class="grid h-40 place-items-center bg-gradient-to-br {{ $tones[$tone] }}">
+            <x-icon name="book" class="size-12 opacity-70" />
+        </div>
+    @endif
     <div class="p-5">
         <span class="text-[10px] font-bold uppercase tracking-[0.15em] text-prevanta-600">{{ $category }}</span>
         <h2 class="mt-2 text-lg font-bold leading-snug text-ink-900">{{ $title }}</h2>
