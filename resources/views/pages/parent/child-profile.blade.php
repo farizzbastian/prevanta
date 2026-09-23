@@ -20,7 +20,7 @@
         <x-metric-tile label="Berat Badan" :value="$latest ? $latest->berat_badan.' kg' : '—'" note="Pengukuran terbaru" icon="chart" />
         <x-metric-tile label="Tinggi Badan" :value="$latest ? $latest->tinggi_badan.' cm' : '—'" note="Pengukuran terbaru" icon="chart" tone="mint" />
         <x-metric-tile label="Lingkar Kepala" :value="$latest?->lingkar_kepala ? $latest->lingkar_kepala.' cm' : '—'" note="Pengukuran terbaru" icon="users" tone="blue" />
-        <x-metric-tile label="Status Gizi" :value="$latest?->status_pertumbuhan?->label() ?? 'Belum Diukur'" :note="$latest?->z_score ? 'Z-score '.$latest->z_score : 'Belum tersedia'" icon="clipboard" tone="sand" />
+        <x-metric-tile label="Status Pertumbuhan" :value="$latest?->status_pertumbuhan?->label() ?? 'Belum Diukur'" :note="$latest?->z_score !== null ? 'Z-score PB/U atau TB/U: '.$latest->z_score.' SD' : 'Belum tersedia'" icon="clipboard" tone="sand" />
     </div>
 
     <div class="grid gap-5 xl:grid-cols-[1.5fr_1fr]"><x-growth-chart title="Kartu Menuju Sehat" subtitle="Perbandingan berat dan tinggi menurut usia" :measurements="$balita->pengukuran" /><x-card><h2 class="font-bold">Informasi Anak</h2><dl class="mt-5 grid gap-4 text-sm">@foreach ([['Tanggal Lahir',$balita->tanggal_lahir->translatedFormat('d F Y')],['Jenis Kelamin',$balita->jenis_kelamin->label()],['Alamat',$balita->alamat],['Jumlah Imunisasi',$balita->imunisasi->count().' catatan'],['Pengukuran Terakhir',$latest?->tanggal_pengukuran->translatedFormat('d F Y') ?? 'Belum ada']] as [$label,$value])<div class="flex justify-between gap-3 border-b border-prevanta-50 pb-3"><dt class="text-ink-500">{{ $label }}</dt><dd class="text-right font-semibold text-ink-900">{{ $value }}</dd></div>@endforeach</dl></x-card></div>

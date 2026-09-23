@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Gender;
-use App\GrowthStatus;
 use App\Models\Edukasi;
 use App\Models\ImunisasiBalita;
 use App\Models\Jadwal;
@@ -13,13 +12,15 @@ use App\Models\Pengukuran;
 use App\Models\User;
 use App\Models\Verifikasi;
 use App\Models\VitaminBalita;
+use App\Services\Growth\WhoHeightForAgeCalculator;
 use App\UserRole;
 use App\VerificationStatus;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    public function run(): void
+    public function run(WhoHeightForAgeCalculator $calculator): void
     {
         $parent = User::factory()->create([
             'name' => 'Siti Rahayu',
@@ -78,13 +79,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         foreach ([
-            ['2026-04-12', 10.4, 79.0, 45.2, -0.8, GrowthStatus::Normal],
-            ['2026-05-12', 10.7, 80.2, 45.5, -0.7, GrowthStatus::Normal],
-            ['2026-06-14', 10.9, 82.1, 46.2, -0.6, GrowthStatus::Normal],
-            ['2026-07-13', 11.2, 83.5, 46.5, -0.5, GrowthStatus::Normal],
-            ['2026-08-15', 11.5, 84.8, 46.8, -0.4, GrowthStatus::Normal],
-            ['2026-09-12', 11.8, 86.0, 47.0, -0.3, GrowthStatus::Normal],
-        ] as [$date, $weight, $height, $head, $zScore, $status]) {
+            ['2026-04-12', 10.4, 79.0, 45.2],
+            ['2026-05-12', 10.7, 80.2, 45.5],
+            ['2026-06-14', 10.9, 82.1, 46.2],
+            ['2026-07-13', 11.2, 83.5, 46.5],
+            ['2026-08-15', 11.5, 84.8, 46.8],
+            ['2026-09-12', 11.8, 86.0, 47.0],
+        ] as [$date, $weight, $height, $head]) {
+            $growth = $calculator->calculate(
+                $arka->jenis_kelamin,
+                $arka->tanggal_lahir,
+                CarbonImmutable::parse($date),
+                $height,
+            );
+
             Pengukuran::create([
                 'balita_id' => $arka->id,
                 'kader_id' => $kader->id,
@@ -93,11 +101,17 @@ class DatabaseSeeder extends Seeder
                 'tinggi_badan' => $height,
                 'lingkar_lengan_atas' => 14.5,
                 'lingkar_kepala' => $head,
-                'z_score' => $zScore,
-                'status_pertumbuhan' => $status,
+                'z_score' => $growth->zScore,
+                'status_pertumbuhan' => $growth->status,
             ]);
         }
 
+        $aisyahGrowth = $calculator->calculate(
+            $aisyah->jenis_kelamin,
+            $aisyah->tanggal_lahir,
+            CarbonImmutable::parse('2026-09-12'),
+            67,
+        );
         Pengukuran::create([
             'balita_id' => $aisyah->id,
             'kader_id' => $kader->id,
@@ -106,8 +120,8 @@ class DatabaseSeeder extends Seeder
             'tinggi_badan' => 67,
             'lingkar_lengan_atas' => 12.1,
             'lingkar_kepala' => 43,
-            'z_score' => -1.8,
-            'status_pertumbuhan' => GrowthStatus::PerluDipantau,
+            'z_score' => $aisyahGrowth->zScore,
+            'status_pertumbuhan' => $aisyahGrowth->status,
         ]);
 
         $verifiedMeasurement = $arka->pengukuran()->oldest('tanggal_pengukuran')->firstOrFail();

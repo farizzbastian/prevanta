@@ -13,7 +13,7 @@
     <div class="min-w-0 flex-1">
         <div class="flex flex-wrap items-center gap-2">
             <h2 class="font-bold text-ink-900">{{ $name }}</h2>
-            <x-status-pill :tone="$status === 'Normal' ? 'green' : ($status === 'Risiko Stunting' ? 'rose' : 'amber')">{{ $status }}</x-status-pill>
+            <x-status-pill :tone="$status === 'Normal' ? 'green' : (str_contains($status, 'Sangat Pendek') ? 'rose' : 'amber')">{{ $status }}</x-status-pill>
         </div>
         <p class="mt-1 text-sm text-ink-500">{{ $age }} · Pengukuran terakhir {{ $updated }}</p>
         <div class="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-xs text-ink-500">

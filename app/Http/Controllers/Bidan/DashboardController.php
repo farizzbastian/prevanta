@@ -23,8 +23,8 @@ class DashboardController extends Controller
             'measured' => $measurementsThisMonth,
             'pending' => $pendingVerification,
             'normal' => $children->where('pengukuranTerbaru.status_pertumbuhan', GrowthStatus::Normal)->count(),
-            'monitor' => $children->where('pengukuranTerbaru.status_pertumbuhan', GrowthStatus::PerluDipantau)->count(),
-            'risk' => $children->where('pengukuranTerbaru.status_pertumbuhan', GrowthStatus::RisikoStunting)->count(),
+            'short' => $children->where('pengukuranTerbaru.status_pertumbuhan', GrowthStatus::Pendek)->count(),
+            'severelyShort' => $children->where('pengukuranTerbaru.status_pertumbuhan', GrowthStatus::SangatPendek)->count(),
         ];
 
         return view('pages.bidan.dashboard', compact('metrics'));

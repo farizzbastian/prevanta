@@ -20,7 +20,10 @@ return new class extends Migration
             $table->string('status', 30);
             $table->timestamps();
 
-            $table->unique(['balita_id', 'jenis_vitamin_id', 'tanggal_pemberian']);
+            $table->unique(
+                ['balita_id', 'jenis_vitamin_id', 'tanggal_pemberian'],
+                'vitamin_balita_unique',
+            );
         });
     }
 

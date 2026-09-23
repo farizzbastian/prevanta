@@ -63,16 +63,19 @@ class KaderBalitaTest extends TestCase
     public function test_kader_can_record_a_measurement_for_balita(): void
     {
         $kader = User::factory()->kader()->create();
-        $balita = Balita::factory()->create();
+        $balita = Balita::factory()->create([
+            'tanggal_lahir' => today(),
+            'jenis_kelamin' => Gender::LakiLaki,
+        ]);
 
         $response = $this->actingAs($kader)->post(route('kader.measurements.store', $balita), [
             'tanggal_pengukuran' => today()->toDateString(),
             'berat_badan' => 11.8,
-            'tinggi_badan' => 86,
+            'tinggi_badan' => 49.8842,
             'lingkar_lengan_atas' => 14,
             'lingkar_kepala' => 47,
-            'z_score' => -0.5,
-            'status_pertumbuhan' => GrowthStatus::Normal->value,
+            'z_score' => -9,
+            'status_pertumbuhan' => GrowthStatus::SangatPendek->value,
         ]);
 
         $response->assertRedirectToRoute('kader.child-profile', $balita);
@@ -80,6 +83,23 @@ class KaderBalitaTest extends TestCase
             'balita_id' => $balita->id,
             'kader_id' => $kader->id,
             'tanggal_pengukuran' => today()->startOfDay()->toDateTimeString(),
+            'z_score' => -0.002,
+            'status_pertumbuhan' => GrowthStatus::Normal->value,
         ]);
+    }
+
+    public function test_measurement_date_must_be_within_the_childs_who_age_range(): void
+    {
+        $kader = User::factory()->kader()->create();
+        $balita = Balita::factory()->create(['tanggal_lahir' => '2020-01-01']);
+
+        $response = $this->actingAs($kader)->post(route('kader.measurements.store', $balita), [
+            'tanggal_pengukuran' => '2026-01-02',
+            'berat_badan' => 18,
+            'tinggi_badan' => 110,
+        ]);
+
+        $response->assertInvalid(['tanggal_pengukuran']);
+        $this->assertDatabaseCount('pengukuran', 0);
     }
 }

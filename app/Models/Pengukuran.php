@@ -29,7 +29,7 @@ class Pengukuran extends Model
             'tinggi_badan' => 'decimal:2',
             'lingkar_lengan_atas' => 'decimal:2',
             'lingkar_kepala' => 'decimal:2',
-            'z_score' => 'decimal:2',
+            'z_score' => 'decimal:3',
             'status_pertumbuhan' => GrowthStatus::class,
         ];
     }

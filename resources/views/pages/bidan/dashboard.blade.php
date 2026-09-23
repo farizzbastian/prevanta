@@ -15,9 +15,9 @@
         <x-metric-tile label="Total Balita" :value="$metrics['total']" note="Terdaftar di sistem" icon="users" />
         <x-metric-tile label="Pengukuran Bulan Ini" :value="$metrics['measured']" note="Data pengukuran masuk" icon="clipboard" tone="mint" />
         <x-metric-tile label="Menunggu Verifikasi" :value="$metrics['pending']" note="Perlu ditinjau" icon="history" tone="sand" />
-        <x-metric-tile label="Gizi Normal" :value="$metrics['normal']" note="Berdasarkan ukur terakhir" icon="chart" tone="mint" />
-        <x-metric-tile label="Perlu Dipantau" :value="$metrics['monitor']" note="Berdasarkan ukur terakhir" icon="bell" tone="sand" />
-        <x-metric-tile label="Risiko Stunting" :value="$metrics['risk']" note="Berdasarkan ukur terakhir" icon="clipboard" tone="rose" />
+        <x-metric-tile label="Pertumbuhan Normal" :value="$metrics['normal']" note="Z-score ≥ -2 SD" icon="chart" tone="mint" />
+        <x-metric-tile label="Pendek (Stunted)" :value="$metrics['short']" note="-3 SD ≤ Z-score < -2 SD" icon="bell" tone="sand" />
+        <x-metric-tile label="Sangat Pendek" :value="$metrics['severelyShort']" note="Z-score < -3 SD" icon="clipboard" tone="rose" />
     </div>
 
     <div class="grid gap-5 xl:grid-cols-[1.55fr_1fr]">
